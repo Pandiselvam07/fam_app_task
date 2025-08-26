@@ -9,7 +9,7 @@ import '../../model/contextual_card_model.dart';
 class SmallDisplayCard extends StatelessWidget {
   final ContextualCard card;
 
-  SmallDisplayCard({required this.card});
+  const SmallDisplayCard({super.key, required this.card});
 
   @override
   Widget build(BuildContext context) {

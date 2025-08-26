@@ -177,7 +177,7 @@ class _BigDisplayCardState extends State<BigDisplayCard>
               position: _slideAnimation,
               child: Container(
                 width: double.infinity,
-                height: 350,
+                height: 420,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   gradient: widget.card.bgGradient != null
@@ -200,7 +200,11 @@ class _BigDisplayCardState extends State<BigDisplayCard>
                         ),
                       ),
                     Container(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        top: 125,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -208,7 +212,7 @@ class _BigDisplayCardState extends State<BigDisplayCard>
                             FormattedTextBuilder.buildFormattedText(
                               widget.card.formattedTitle!,
                               style: const TextStyle(
-                                fontSize: 30,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -217,17 +221,17 @@ class _BigDisplayCardState extends State<BigDisplayCard>
                             Text(
                               widget.card.title!,
                               style: const TextStyle(
-                                fontSize: 30,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
                             ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 4),
                           if (widget.card.formattedDescription != null)
                             FormattedTextBuilder.buildFormattedText(
                               widget.card.formattedDescription!,
                               style: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 12,
                                 color: Colors.white70,
                               ),
                             )
@@ -235,18 +239,24 @@ class _BigDisplayCardState extends State<BigDisplayCard>
                             Text(
                               widget.card.description!,
                               style: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 12,
                                 color: Colors.white70,
                               ),
                             ),
-                          const Spacer(),
                           if (widget.card.cta.isNotEmpty)
                             Row(
                               children: widget.card.cta
                                   .map(
                                     (cta) => Padding(
-                                      padding: const EdgeInsets.only(right: 12),
-                                      child: CTAButton.buildCTAButton(cta),
+                                      padding: const EdgeInsets.only(
+                                        left: 12,
+                                        right: 12,
+                                      ),
+                                      child: SizedBox(
+                                        width: 125,
+                                        height: 30,
+                                        child: CTAButton.buildCTAButton(cta),
+                                      ),
                                     ),
                                   )
                                   .toList(),

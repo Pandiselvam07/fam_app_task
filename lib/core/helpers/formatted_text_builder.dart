@@ -9,10 +9,42 @@ class FormattedTextBuilder {
     FormattedText formattedText, {
     TextStyle? style,
   }) {
+    // Case 1: No entities → fallback to plain text
     if (formattedText.entities.isEmpty) {
       return Text(formattedText.text, style: style);
     }
 
+    // Case 2: Entities exist but no {} placeholder in text
+    if (!formattedText.text.contains('{}')) {
+      return RichText(
+        text: TextSpan(
+          children: formattedText.entities.map((entity) {
+            return TextSpan(
+              text: entity.text,
+              style: TextStyle(
+                color: ColorUtils.parseColor(entity.color) ?? style?.color,
+                fontStyle: entity.fontStyle == 'italic'
+                    ? FontStyle.italic
+                    : FontStyle.normal,
+                decoration: entity.fontStyle == 'underline'
+                    ? TextDecoration.underline
+                    : TextDecoration.none,
+                fontWeight: entity.fontStyle?.contains("semi_bold") == true
+                    ? FontWeight.w600
+                    : style?.fontWeight,
+                fontSize: style?.fontSize,
+              ),
+              recognizer: entity.url != null
+                  ? (TapGestureRecognizer()
+                      ..onTap = () => UrlHandler.handleTap(entity.url))
+                  : null,
+            );
+          }).toList(),
+        ),
+      );
+    }
+
+    // Case 3: Entities with {} placeholders → template parsing
     List<TextSpan> spans = [];
     String text = formattedText.text;
     int entityIndex = 0;
@@ -35,8 +67,10 @@ class FormattedTextBuilder {
             fontStyle: entity.fontStyle == 'italic'
                 ? FontStyle.italic
                 : FontStyle.normal,
+            fontWeight: entity.fontStyle?.contains("semi_bold") == true
+                ? FontWeight.w600
+                : style?.fontWeight,
             fontSize: style?.fontSize,
-            fontWeight: style?.fontWeight,
           ),
           recognizer: entity.url != null
               ? (TapGestureRecognizer()

@@ -12,7 +12,7 @@ class CTAButton {
         foregroundColor: ColorUtils.parseColor(cta.textColor) ?? Colors.black,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       ),
-      child: Text(cta.text),
+      child: Text(cta.text, style: TextStyle(color: Colors.white)),
     );
   }
 }

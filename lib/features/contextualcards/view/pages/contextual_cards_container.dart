@@ -6,7 +6,7 @@ import '../../model/card_group_model.dart';
 import '../widgets/card_group_widget.dart';
 
 class ContextualCardsContainer extends StatefulWidget {
-  const ContextualCardsContainer({Key? key}) : super(key: key);
+  const ContextualCardsContainer({super.key});
 
   @override
   _ContextualCardsContainerState createState() =>
@@ -26,13 +26,19 @@ class _ContextualCardsContainerState extends State<ContextualCardsContainer>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!_disposed && mounted) {
-        _loadDismissedCards();
-        _fetchData();
+        // await clearAllPrefs();
+        await _loadDismissedCards();
+        await _fetchData();
       }
     });
   }
+
+  // Future<void> clearAllPrefs() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.clear();
+  // }
 
   @override
   void dispose() {
@@ -54,7 +60,7 @@ class _ContextualCardsContainerState extends State<ContextualCardsContainer>
         });
       }
     } catch (e) {
-      print('Error loading dismissed cards: $e');
+      print(e);
     }
   }
 
@@ -69,7 +75,7 @@ class _ContextualCardsContainerState extends State<ContextualCardsContainer>
         remindLaterCards.toList(),
       );
     } catch (e) {
-      print('Error saving dismissed cards: $e');
+      print(e);
     }
   }
 
@@ -99,14 +105,41 @@ class _ContextualCardsContainerState extends State<ContextualCardsContainer>
           final homeSection = data[0];
           final List<dynamic> hcGroups = homeSection['hc_groups'] ?? [];
 
+          for (int i = 0; i < hcGroups.length; i++) {
+            final group = hcGroups[i];
+
+            final cards = group['cards'] as List<dynamic>? ?? [];
+            for (int j = 0; j < cards.length; j++) {
+              final card = cards[j];
+
+              if (card['bg_image'] != null) {}
+              if (card['icon'] != null) {}
+            }
+          }
+
           if (!_disposed && mounted) {
             setState(() {
               cardGroups = hcGroups
                   .map((group) => CardGroup.fromJson(group))
+                  .map((group) {
+                    final filteredCards = group.cards
+                        .where(
+                          (card) =>
+                              !dismissedCards.contains(card.name) &&
+                              !remindLaterCards.contains(card.name),
+                        )
+                        .toList();
+
+                    return group.copyWith(cards: filteredCards);
+                  })
+                  .where((group) => group.cards.isNotEmpty)
                   .toList();
+
               isLoading = false;
             });
           }
+        } else {
+          throw Exception('Invalid response format');
         }
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');

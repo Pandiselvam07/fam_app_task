@@ -8,7 +8,7 @@ import '../../model/contextual_card_model.dart';
 class ImageCard extends StatelessWidget {
   final ContextualCard card;
 
-  ImageCard({required this.card});
+  const ImageCard({super.key, required this.card});
 
   @override
   Widget build(BuildContext context) {

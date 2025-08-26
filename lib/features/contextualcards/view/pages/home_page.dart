@@ -18,8 +18,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        elevation: 0,
-        title: SvgPicture.asset('svg/fampaylogo.svg', height: 30),
+        title: SvgPicture.asset('assets/svg/fampaylogo.svg', height: 45),
       ),
       body: const ContextualCardsContainer(),
     );

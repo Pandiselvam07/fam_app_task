@@ -19,11 +19,29 @@ class CardGroup {
     return CardGroup(
       designType: json['design_type'] ?? '',
       name: json['name'] ?? '',
-      cards: (json['cards'] as List<dynamic>)
-          .map((e) => ContextualCard.fromJson(e))
-          .toList(),
+      cards:
+          (json['cards'] as List<dynamic>?)
+              ?.map((e) => ContextualCard.fromJson(e))
+              .toList() ??
+          [],
       height: json['height'],
       isScrollable: json['is_scrollable'] ?? false,
+    );
+  }
+
+  CardGroup copyWith({
+    String? designType,
+    String? name,
+    List<ContextualCard>? cards,
+    int? height,
+    bool? isScrollable,
+  }) {
+    return CardGroup(
+      designType: designType ?? this.designType,
+      name: name ?? this.name,
+      cards: cards ?? this.cards,
+      height: height ?? this.height,
+      isScrollable: isScrollable ?? this.isScrollable,
     );
   }
 }
