@@ -26,10 +26,15 @@ class CardGroupWidget extends StatelessWidget {
             return Container(
               width: _getCardWidth(cardGroup.designType),
               margin: EdgeInsets.only(
-                left: index == 0 ? 16 : 8,
+                left: index == 0 ? 20 : 8,
                 right: index == cardGroup.cards.length - 1 ? 16 : 8,
+                bottom: 12,
               ),
-              child: _buildCard(cardGroup.cards[index], cardGroup.designType),
+              child: _buildCard(
+                cardGroup.cards[index],
+                cardGroup.designType,
+                null,
+              ),
             );
           },
         ),
@@ -48,7 +53,11 @@ class CardGroupWidget extends StatelessWidget {
                 top: 16,
                 bottom: 16,
               ),
-              child: _buildCard(cardGroup.cards[index], cardGroup.designType),
+              child: _buildCard(
+                cardGroup.cards[index],
+                cardGroup.designType,
+                index,
+              ),
             );
           },
         ),
@@ -62,7 +71,7 @@ class CardGroupWidget extends StatelessWidget {
               (entry) => Expanded(
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  child: _buildCard(entry.value, cardGroup.designType),
+                  child: _buildCard(entry.value, cardGroup.designType, null),
                 ),
               ),
             )
@@ -74,7 +83,7 @@ class CardGroupWidget extends StatelessWidget {
   double _getCardHeight(String designType) {
     switch (designType) {
       case 'HC1':
-        return 60;
+        return 70;
       case 'HC3':
         return 350;
       case 'HC5':
@@ -101,7 +110,7 @@ class CardGroupWidget extends StatelessWidget {
     }
   }
 
-  Widget _buildCard(ContextualCard card, String designType) {
+  Widget _buildCard(ContextualCard card, String designType, int? index) {
     switch (designType) {
       case 'HC1':
         return SmallDisplayCard(card: card);
@@ -112,7 +121,7 @@ class CardGroupWidget extends StatelessWidget {
       case 'HC6':
         return SmallCardWithArrow(card: card);
       case 'HC9':
-        return DynamicWidthCard(card: card);
+        return DynamicWidthCard(card: card, index: index ?? 0);
       default:
         return Container();
     }

@@ -177,7 +177,7 @@ class _BigDisplayCardState extends State<BigDisplayCard>
               position: _slideAnimation,
               child: Container(
                 width: double.infinity,
-                height: 420,
+                height: 378,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   gradient: widget.card.bgGradient != null

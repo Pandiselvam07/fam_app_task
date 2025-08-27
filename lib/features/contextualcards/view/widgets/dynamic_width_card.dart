@@ -6,24 +6,15 @@ import '../../model/contextual_card_model.dart';
 
 class DynamicWidthCard extends StatelessWidget {
   final ContextualCard card;
+  final int index;
 
-  const DynamicWidthCard({required this.card, super.key});
-  int _getFlexForCard() {
-    String referenceText = '';
+  const DynamicWidthCard({required this.card, super.key, required this.index});
 
-    if (card.title != null && card.title!.isNotEmpty) {
-      referenceText = card.title!;
-    } else if (card.description != null && card.description!.isNotEmpty) {
-      referenceText = card.description!;
-    } else if (card.url != null && card.url!.isNotEmpty) {
-      referenceText = card.url!;
-    }
-    if (referenceText.length > 15) {
-      return 3;
-    } else if (referenceText.length > 7) {
-      return 2;
-    }
-    return 1;
+  double _getWidthForCard() {
+    if (index % 4 == 0) return 75;
+    if (index % 3 == 0) return 125;
+    if (index % 2 == 0) return 150;
+    return 120;
   }
 
   @override
@@ -32,54 +23,55 @@ class DynamicWidthCard extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Flexible(
-      flex: _getFlexForCard(),
-      child: GestureDetector(
-        onTap: () => UrlHandler.handleTap(card.url),
-        child: Container(
-          margin: const EdgeInsets.all(6),
-          height: 100,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              transform: GradientRotation(
-                (card.bgGradient!.angle) * math.pi / 180,
-              ),
-              colors: card.bgGradient!.colors.map((hex) {
-                final color = ColorUtils.parseColor(hex);
-                if (color == null) {
-                  return Colors.blue.shade300;
-                }
-                return color;
-              }).toList(),
+    return GestureDetector(
+      onTap: () => UrlHandler.handleTap(card.url),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        width: _getWidthForCard().toDouble(),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            transform: GradientRotation(
+              (card.bgGradient!.angle) * math.pi / 180,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black,
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              ),
-            ],
+            colors: card.bgGradient!.colors.map((hex) {
+              final color = ColorUtils.parseColor(hex);
+              if (color == null) {
+                return Colors.blue.shade300;
+              }
+              return color;
+            }).toList(),
           ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: card.title != null && card.title!.isNotEmpty
-                  ? Text(
-                      card.title!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  : null,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
+          ],
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12.0,
+              vertical: 8.0,
+            ),
+            child: card.title != null && card.title!.isNotEmpty
+                ? Text(
+                    card.title!,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                      fontSize: 13,
+                      height: 1.2,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                : const SizedBox.shrink(),
           ),
         ),
       ),

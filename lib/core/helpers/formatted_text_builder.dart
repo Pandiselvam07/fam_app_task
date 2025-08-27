@@ -9,12 +9,10 @@ class FormattedTextBuilder {
     FormattedText formattedText, {
     TextStyle? style,
   }) {
-    // Case 1: No entities → fallback to plain text
     if (formattedText.entities.isEmpty) {
       return Text(formattedText.text, style: style);
     }
 
-    // Case 2: Entities exist but no {} placeholder in text
     if (!formattedText.text.contains('{}')) {
       return RichText(
         text: TextSpan(
@@ -44,7 +42,6 @@ class FormattedTextBuilder {
       );
     }
 
-    // Case 3: Entities with {} placeholders → template parsing
     List<TextSpan> spans = [];
     String text = formattedText.text;
     int entityIndex = 0;
