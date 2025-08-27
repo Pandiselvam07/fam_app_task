@@ -98,7 +98,7 @@ class CardGroupWidget extends StatelessWidget {
   double _getCardWidth(String designType) {
     switch (designType) {
       case 'HC1':
-        return 175;
+        return 200;
       case 'HC3':
         return 300;
       case 'HC5':

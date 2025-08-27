@@ -49,7 +49,7 @@ class SmallCardWithArrow extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+            Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
           ],
         ),
       ),

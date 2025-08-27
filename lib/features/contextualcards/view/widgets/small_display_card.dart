@@ -38,13 +38,49 @@ class SmallDisplayCard extends StatelessWidget {
                   if (card.formattedTitle != null)
                     FormattedTextBuilder.buildFormattedText(
                       card.formattedTitle!,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.black87,
+                        height: 1.2,
+                      ),
                     )
-                  else if (card.title != null)
+                  else if (card.title != null && card.title!.trim().isNotEmpty)
                     Text(
                       card.title!,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.black87,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                    ),
+                  if (card.formattedDescription != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: FormattedTextBuilder.buildFormattedText(
+                        card.formattedDescription!,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black54,
+                          height: 1.1,
+                        ),
+                      ),
+                    )
+                  else if (card.description != null &&
+                      card.description!.trim().isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        card.description!,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black54,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                 ],
               ),

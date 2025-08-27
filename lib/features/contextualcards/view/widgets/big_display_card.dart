@@ -33,7 +33,7 @@ class _BigDisplayCardState extends State<BigDisplayCard>
       vsync: this,
     );
     _slideAnimation =
-        Tween<Offset>(begin: Offset.zero, end: const Offset(0.3, 0)).animate(
+        Tween<Offset>(begin: Offset.zero, end: const Offset(0.45, 0)).animate(
           CurvedAnimation(parent: _slideController, curve: Curves.easeInOut),
         );
   }
@@ -96,36 +96,52 @@ class _BigDisplayCardState extends State<BigDisplayCard>
                 top: 0,
                 bottom: 0,
                 child: Container(
-                  padding: EdgeInsets.only(right: _isSliding ? 50 : 0),
-
+                  padding: EdgeInsets.only(right: _isSliding ? 25 : 0),
                   width: 150,
+
                   child: Column(
                     children: [
-                      SizedBox(height: 50),
+                      SizedBox(height: 75),
 
                       Expanded(
                         child: GestureDetector(
                           onTap: () => _handleDismiss(false),
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 6),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.orange,
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
                             ),
-                            child: const Column(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Color(0xFFF5F5F5),
+                            ),
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.schedule,
-                                  color: Colors.white,
-                                  size: 28,
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  'Remind Later',
-                                  style: TextStyle(
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFFFB800),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Icon(
+                                    Icons.notifications,
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                    size: 24,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'remind later',
+                                  style: TextStyle(
+                                    color: Color(0xFF333333),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -134,31 +150,48 @@ class _BigDisplayCardState extends State<BigDisplayCard>
                           ),
                         ),
                       ),
-                      SizedBox(height: 75),
+
+                      SizedBox(height: 16),
+
                       Expanded(
                         child: GestureDetector(
                           onTap: () => _handleDismiss(true),
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 6),
-
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.red,
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
                             ),
-                            child: const Column(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Color(0xFFF5F5F5),
+                            ),
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.close,
-                                  color: Colors.white,
-                                  size: 28,
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  'Dismiss Now',
-                                  style: TextStyle(
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFFF9500),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Icon(
+                                    Icons.close,
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                    size: 20,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'dismiss now',
+                                  style: TextStyle(
+                                    color: Color(0xFF333333),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -167,12 +200,12 @@ class _BigDisplayCardState extends State<BigDisplayCard>
                           ),
                         ),
                       ),
-                      SizedBox(height: 50),
+
+                      SizedBox(height: 75),
                     ],
                   ),
                 ),
-              ),
-            // Main card
+              ), // Main card
             SlideTransition(
               position: _slideAnimation,
               child: Container(

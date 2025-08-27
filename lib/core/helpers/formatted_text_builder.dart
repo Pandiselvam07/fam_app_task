@@ -58,9 +58,9 @@ class FormattedTextBuilder {
           text: entity.text,
           style: TextStyle(
             color: ColorUtils.parseColor(entity.color) ?? style?.color,
-            decoration: entity.fontStyle == 'underline'
-                ? TextDecoration.underline
-                : TextDecoration.none,
+            // decoration: entity.fontStyle == 'underline'
+            //     ? TextDecoration.underline
+            //     : TextDecoration.none,
             fontStyle: entity.fontStyle == 'italic'
                 ? FontStyle.italic
                 : FontStyle.normal,
